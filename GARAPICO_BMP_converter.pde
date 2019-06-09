@@ -34,7 +34,7 @@ void setup() {
   for (int i=0; i<maxAnim; i++) {
     img[i] = loadImage("dummy.png");
   }
-  
+
   canvas = createGraphics(16, 16);
 
   first = 1;
@@ -91,7 +91,7 @@ void loadImage_DragDrop() {
 
 //DRAG & DROP
 String[] extensions = {
-  ".bmp", ".gif", ".png",
+  ".bmp", ".gif", ".png", 
   ".BMP", ".GIF", ".PNG"
 };
 
@@ -109,21 +109,28 @@ void dropEvent(DropEvent theDropEvent) {
         img[i] = loadImage("dummy.png");
       }
       imgname = myFile.getName();
-      //println(myFile.getName());
 
       int fileCount = myFile.listFiles().length;
-
       imgCountMax=0;
       preCount=0;
       imgCount=0;
 
+      //files=sort(files);
+
+      String[] path = {};
       for (int i=0; i<fileCount; i++) {
         for (String extension : extensions) {
           if (files[i].getPath().endsWith(extension)) {
-            img[imgCountMax]  = loadImage(files[i].getAbsolutePath());
-            imgCountMax++;
+            path = append(path, files[i].getAbsolutePath());
+            path = sort(path);
+            preCount++;
           }
         }
+      }
+      
+      for(int i=0; i<preCount; i++){
+            img[imgCountMax]  = loadImage(path[i]);
+            imgCountMax++;
       }
     }
   }
